@@ -41,10 +41,7 @@ void Octree::insert(Particle* p) {
   if (m_isLeaf && !m_particle) {
     //std::cout << m_id << " New leaf " << *p << std::endl;
     m_particle = p;
-
-    m_mx = m_particle->getX();
-    m_my = m_particle->getY();
-    m_mz = m_particle->getZ();
+    m_particle->getPos(m_mx, m_my, m_mz);
     m_mass = m_particle->getMass();
 
     return;

@@ -2,14 +2,13 @@
 
 Particle::Particle(double mass, double vx, double vy, double vz, double rx, double ry, double rz):
   m_mass(mass),
-  m_vx(vx),
-  m_vy(vy),
-  m_vz(vz),
-  m_rx(rx),
-  m_ry(ry),
-  m_rz(rz)
+  m_velocity(),
+  m_force()
 {
-  this->m_id = Particle::counter++;
+  m_id = Particle::counter++;
+  m_position[0] = rx;
+  m_position[1] = ry;
+  m_position[2] = rz;
 }
 
 Particle::Particle(): Particle(0, 0, 0, 0, 0, 0, 0) {}
@@ -17,41 +16,48 @@ Particle::Particle(): Particle(0, 0, 0, 0, 0, 0, 0) {}
 Particle::~Particle() {}
 
 double Particle::getX() {
-  return this->m_rx;
+  return m_position[0];
 }
 
 double Particle::getY() {
-  return this->m_ry;
+  return m_position[1];
 }
 
 double Particle::getZ() {
-  return this->m_rz;
+  return m_position[2];
+}
+
+double Particle::getPos(int dim) {
+  return m_position[dim];
+}
+
+void Particle::getPos(double& rx, double& ry, double& rz) {
+  rx = m_position[0];
+  ry = m_position[1];
+  rz = m_position[2];
 }
 
 double Particle::getMass() {
-  return this->m_mass;
+  return m_mass;
 }
 
 void Particle::setForce(double fx, double fy, double fz) {
-  this->m_fx = fx;
-  this->m_fy = fy;
-  this->m_fz = fz;
+  m_force[0] = fx;
+  m_force[1] = fy;
+  m_force[2] = fz;
 }
 
 void Particle::addForce(double fx, double fy, double fz) {
-  this->m_fx += fx;
-  this->m_fy += fy;
-  this->m_fz += fz;
+  m_force[0] += fx;
+  m_force[1] += fy;
+  m_force[2] += fz;
 }
 
 void Particle::update(double deltaT) {
-  this->m_vx += deltaT * this->m_fx / this->m_mass;
-  this->m_vy += deltaT * this->m_fy / this->m_mass;
-  this->m_vz += deltaT * this->m_fz / this->m_mass;
-
-  this->m_rx += deltaT * this->m_vx;
-  this->m_ry += deltaT * this->m_vy;
-  this->m_rz += deltaT * this->m_vz;
+  for (int i = 0; i < 3; i++) {
+    m_velocity[i] += deltaT * m_force[i] / m_mass;
+    m_position[i] += deltaT * m_velocity[i];
+  }
 }
 
 void Particle::computeForce(Particle* p1, Particle* p2, double& fx, double& fy, double& fz) {
@@ -75,13 +81,15 @@ void Particle::computeForce(Particle* p1, Particle* p2) {
 
 std::ostream& operator<<(std::ostream& out, const Particle& p) {
   return out << p.m_id << " " <<
-    p.m_rx << " " << p.m_ry << " " << p.m_rz << " " <<
-    p.m_fx << " " << p.m_fy << " " << p.m_fz << " " <<
-    p.m_vx << " " << p.m_vy << " " << p.m_vz;
+    p.m_position[0] << " " << p.m_position[1] << " " << p.m_position[2] << " " <<
+    p.m_force[0] << " " << p.m_force[1] << " " << p.m_force[2] << " " <<
+    p.m_velocity[0] << " " << p.m_velocity[1] << " " << p.m_velocity[2];
 }
 
 std::istream& operator>>(std::istream& in, Particle& p) {
-  return in >> p.m_mass >> p.m_rx >> p.m_ry >> p.m_rz >> p.m_vx >> p.m_vy >> p.m_vz;
+  return in >> p.m_mass >>
+    p.m_position[0] >> p.m_position[1] >> p.m_position[2] >>
+    p.m_velocity[0] >> p.m_velocity[1] >> p.m_velocity[2];
 }
 
 int Particle::counter = 0;

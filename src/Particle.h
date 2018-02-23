@@ -15,6 +15,8 @@ class Particle {
     double getX();
     double getY();
     double getZ();
+    double getPos(int dim);
+    void getPos(double& rx, double& ry, double& rz);
 
     double getMass();
 
@@ -31,17 +33,13 @@ class Particle {
     static int counter;
   private:
     double m_mass;
-    double m_vx;
-    double m_vy;
-    double m_vz;
 
-    double m_rx;
-    double m_ry;
-    double m_rz;
+    double m_velocity[3];
 
-    double m_fx = 0;
-    double m_fy = 0;
-    double m_fz = 0;
+    double m_position[3];
+
+    double m_force[3];
+
     int m_id;
 };
 
