@@ -1,7 +1,7 @@
 #include "Octree.h"
 
-Octree::Octree(double rx, double ry, double rz, double width, double height, double depth):
-  m_rx(rx), m_ry(ry), m_rz(rz), m_width(width), m_height(height), m_depth(depth), m_octants(), m_particle(), m_isLeaf(true), m_id(counter) {
+Octree::Octree(double rx, double ry, double rz, double size):
+  m_rx(rx), m_ry(ry), m_rz(rz), m_size(size), m_octants(), m_particle(), m_isLeaf(true), m_id(counter) {
     counter++;
   }
 
@@ -19,17 +19,13 @@ Octree* Octree::getOctant(Particle* p) {
   index = x | (y << 1) | (z << 2);
 
   if (!m_octants[index]) {
-    double newWidth = m_width / 2;
-    double newHeight = m_height / 2;
-    double newDepth = m_depth / 2;
+    double newSize = m_size / 2;
 
     m_octants[index] = new Octree(
-      m_rx + (2 * x - 1) * newWidth / 2,
-      m_ry + (2 * y - 1) * newHeight / 2,
-      m_rz + (2 * z - 1) * newDepth / 2,
-      newWidth,
-      newHeight,
-      newDepth
+      m_rx + (2 * x - 1) * newSize / 2,
+      m_ry + (2 * y - 1) * newSize / 2,
+      m_rz + (2 * z - 1) * newSize / 2,
+      newSize
     );
   }
   //std::cout << m_id << " Got " << m_quads[index]->m_id << " at " << (int)index << std::endl;
@@ -89,8 +85,7 @@ std::ostream& Octree::print(std::ostream& out, int level) {
   } else {
     out << "Node Bounding Box: (x, y, z) = (" <<
       m_rx << ", " << m_ry << ", " << m_rz <<
-      ") (w, h, d) = " <<
-      m_width << ", " << m_height << ", " << m_depth <<
+      ") size = " << m_size <<
       "; Center of mass: (x, y, z) = (" <<
       m_mx << ", " << m_my << ", " << m_mz << ") " <<
       "mass = " << m_mass << std::endl;

@@ -1,6 +1,8 @@
 #ifndef _BARNES_HUT_SIMULATION_H_
 #define _BARNES_HUT_SIMULATION_H_
 
+#include <algorithm>
+
 #include "Simulation.h"
 #include "Octree.h"
 

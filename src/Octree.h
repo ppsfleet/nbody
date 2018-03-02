@@ -7,7 +7,7 @@
 
 class Octree {
   public:
-    Octree(double rx, double ry, double rz, double width, double height, double depth);
+    Octree(double rx, double ry, double rz, double size);
     virtual ~Octree();
     void insert(Particle* p);
     Octree* getOctant(Particle* p);
@@ -20,9 +20,7 @@ class Octree {
     double m_ry;
     double m_rz;
 
-    double m_width;
-    double m_height;
-    double m_depth;
+    double m_size;
 
     double m_mass = 0;
 

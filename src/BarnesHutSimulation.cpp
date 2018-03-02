@@ -28,13 +28,12 @@ void BarnesHutSimulation::initTree(double min[3], double max[3]) {
   if (m_tree) {
     delete m_tree;
   }
+
   m_tree = new Octree(
     (min[0] + max[0])/2,
     (min[1] + max[1])/2,
     (min[2] + max[2])/2,
-    max[0] - min[0],
-    max[1] - min[1],
-    max[2] - min[2]
+    std::max(std::max(max[0] - min[0], max[1] - min[1]), max[2] - min[2])
   );
 
   for (auto p: m_particles) {
