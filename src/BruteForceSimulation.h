@@ -10,18 +10,16 @@
 
 class BruteForceSimulation: public Simulation<Particle> {
   public:
-    void run () {
-      for (int n = 0; n < 2500; n++) {
-        for (auto p: m_particles) {
-          p->setForce(0, 0, 0);
+    void step (double deltaT) {
+      for (auto p: m_particles) {
+        p->setForce(0, 0, 0);
+      }
+      for (unsigned int i = 0; i < m_particles.size(); i++) {
+        for (unsigned int j = i+1; j < m_particles.size(); j++) {
+            Particle::computeForce(m_particles[i], m_particles[j]);
         }
-        for (unsigned int i = 0; i < m_particles.size(); i++) {
-          for (unsigned int j = i+1; j < m_particles.size(); j++) {
-              Particle::computeForce(m_particles[i], m_particles[j]);
-          }
-          m_particles[i]->update(0.01);
-          std::cout << *m_particles[i] << std::endl;
-        }
+        m_particles[i]->update(deltaT);
+        std::cout << *m_particles[i] << std::endl;
       }
     }
 };

@@ -8,7 +8,7 @@
 
 class BarnesHutSimulation: public Simulation<Particle> {
   public:
-    void run ();
+    void step (double deltaT);
     void computeBoundingBox(double min[3], double max[3]);
     void initTree(double min[3], double max[3]);
   private:

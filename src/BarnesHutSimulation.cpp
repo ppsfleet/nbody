@@ -1,6 +1,6 @@
 #include "BarnesHutSimulation.h"
 
-void BarnesHutSimulation::run () {
+void BarnesHutSimulation::step (double deltaT) {
   double min[3], max[3];
 
   computeBoundingBox(min, max);

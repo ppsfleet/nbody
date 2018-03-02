@@ -11,7 +11,8 @@ class Simulation {
   public:
     Simulation();
     virtual ~Simulation();
-    virtual void run() = 0;
+    void run(int iteration);
+    virtual void step(double deltaT) = 0;
   protected:
     std::vector<T*> m_particles;
 };
@@ -38,5 +39,13 @@ Simulation<T>::~Simulation() {
     delete p;
   }
 }
+
+template <class T>
+void Simulation<T>::run(int iteration) {
+  for (int step_i = 0; step_i < iteration; step_i++) {
+    step(0.01);
+  }
+}
+
 
 #endif
