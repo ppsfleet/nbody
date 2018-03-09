@@ -11,6 +11,16 @@ Octree::~Octree() {
   }
 }
 
+double Octree::getMass() {
+  return m_mass;
+}
+
+void Octree::getPos(double pos[3]) {
+  pos[0] = m_mx;
+  pos[1] = m_my;
+  pos[2] = m_mz;
+}
+
 Octree* Octree::getOctant(Particle* p) {
   unsigned char x, y, z, index;
   x = p->getX() > m_rx;

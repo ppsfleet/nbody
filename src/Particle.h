@@ -1,12 +1,12 @@
 #ifndef _PARTICLE_H_
 #define _PARTICLE_H_
 
+#include "IParticle.h"
+
 #include <iostream>
 #include <cmath>
 
-#define G 1 //6.67408e-11
-
-class Particle {
+class Particle: public IParticle {
   public:
     Particle(double mass, double vx, double vy, double vz, double rx, double ry, double rz);
     Particle();
@@ -16,6 +16,7 @@ class Particle {
     double getY();
     double getZ();
     double getPos(int dim);
+    void getPos(double pos[3]);
     void getPos(double& rx, double& ry, double& rz);
 
     double getMass();
@@ -24,7 +25,6 @@ class Particle {
     void addForce(double fx, double fy, double fz);
     void update(double deltaT);
 
-    static void computeForce(Particle* p1, Particle* p2, double& fx, double& fy, double& fz);
     static void computeForce(Particle* p1, Particle* p2);
 
     friend std::ostream& operator<<(std::ostream& out, const Particle& p);

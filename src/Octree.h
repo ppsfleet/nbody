@@ -4,13 +4,16 @@
 #include <iostream>
 
 #include "Particle.h"
+#include "IParticle.h"
 
-class Octree {
+class Octree: public IParticle {
   public:
     Octree(double rx, double ry, double rz, double size);
     virtual ~Octree();
     void insert(Particle* p);
     Octree* getOctant(Particle* p);
+    double getMass();
+    void getPos(double pos[3]);
 
     static int counter;
 

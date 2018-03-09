@@ -31,6 +31,12 @@ double Particle::getPos(int dim) {
   return m_position[dim];
 }
 
+void Particle::getPos(double pos[3]) {
+  for (int i = 0; i < 3; i++) {
+    pos[i] = m_position[i];
+  }
+}
+
 void Particle::getPos(double& rx, double& ry, double& rz) {
   rx = m_position[0];
   ry = m_position[1];
@@ -60,23 +66,12 @@ void Particle::update(double deltaT) {
   }
 }
 
-void Particle::computeForce(Particle* p1, Particle* p2, double& fx, double& fy, double& fz) {
-  double dx = p2->getX() - p1->getX();
-  double dy = p2->getY() - p1->getY();
-  double dz = p2->getZ() - p1->getZ();
-
-  double r = sqrt(dx*dx + dy*dy + dz*dz);
-  double force = G*p1->getMass()*p2->getMass()/(r*r);
-  fx = force * dx / r;
-  fy = force * dy / r;
-  fz = force * dz / r;
-}
-
 void Particle::computeForce(Particle* p1, Particle* p2) {
-  double fx, fy, fz;
-  Particle::computeForce(p1, p2, fx, fy, fz);
-  p1->addForce(fx, fy, fz);
-  p2->addForce(-fx, -fy, -fz);
+  double force[3];
+  IParticle::computeForce(p1, p2, force);
+
+  p1->addForce(force[0], force[1], force[2]);
+  p2->addForce(-force[0], -force[1], -force[2]);
 }
 
 std::ostream& operator<<(std::ostream& out, const Particle& p) {
