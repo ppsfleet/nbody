@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
   // Default
   int opt;
   int nbIter = 500;
-  int intervIter = 1;
+  float intervIter = 1;
   string algo = "bruteforce";
 
   // parse argument
@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
   {
       case 'a': algo = optarg ; break;
       case 'n': nbIter = boost::lexical_cast<int>(optarg); break;
-      case 'i': intervIter = boost::lexical_cast<int>(optarg); break;
+      case 'i': intervIter = boost::lexical_cast<float>(optarg); break;
       case '?': fprintf(stderr, "usuage is \n -a <value>: for determining used algorithm, [barneshut, bruteforce] default :  bruteforce \n"
         " -n <value>: for setting the number of iteration, default : 500\n"
         " -i <value>: for setting the time between each iteration, default : 1\n ");
@@ -34,12 +34,12 @@ int main(int argc, char *argv[])
   // treatment
   cout << "algo " << algo << " nb itération " << nbIter << " tps Interval " << intervIter << endl;
   if(algo == "barneshut"){
-    //BruteForceSimulation simulation;
-    //simulation.run(nbIter, intervIter);
+    BarnesHutSimulation simulation;
+    simulation.run(nbIter);//, intervIter);
   }
   else if(algo == "bruteforce"){
-    //BarnesHutSimulation simulation;
-    //simulation.run(nbIter, intervIter);
+    BruteForceSimulation simulation;
+    simulation.run(nbIter);//, intervIter);
   }else{
     std::cerr <<"Unknown algorithm, try bruteforce or barneshut"<<endl;
   }
