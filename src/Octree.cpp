@@ -15,10 +15,30 @@ double Octree::getMass() {
   return m_mass;
 }
 
+bool Octree::isLeaf() {
+  return m_isLeaf;
+}
+
+Particle* Octree::getParticle() {
+  return m_particle;
+}
+
+double Octree::getSDQuotient(Particle* p) {
+  double dx = p->getPos(0) - m_mx;
+  double dy = p->getPos(1) - m_my;
+  double dz = p->getPos(2) - m_mz;
+
+  return m_size / sqrt(dx*dx + dy*dy + dz*dz);
+}
+
 void Octree::getPos(double pos[3]) {
   pos[0] = m_mx;
   pos[1] = m_my;
   pos[2] = m_mz;
+}
+
+Octree* Octree::getOctant(int i) {
+  return m_octants[i];
 }
 
 Octree* Octree::getOctant(Particle* p) {

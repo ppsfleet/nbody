@@ -15,11 +15,23 @@ class BruteForceSimulation: public Simulation<Particle> {
         p->setForce(0, 0, 0);
       }
       for (unsigned int i = 0; i < m_particles.size(); i++) {
-        for (unsigned int j = i+1; j < m_particles.size(); j++) {
-            Particle::computeForce(m_particles[i], m_particles[j]);
+        //std::cerr << m_particles[i]->m_id << " ";
+        for (unsigned int j = 0; j < m_particles.size(); j++) {
+          if (i != j) {
+            //std::cerr << m_particles[j]->m_id << ", ";
+            //Particle::computeForce(m_particles[i], m_particles[j]);
+            double force[3];
+            IParticle::computeForce(m_particles[i], m_particles[j], force);
+            m_particles[i]->addForce(force[0], force[1], force[2]);
+          }
         }
-        m_particles[i]->update(deltaT);
-        std::cout << *m_particles[i] << std::endl;
+        //std::cerr << std::endl;
+        //m_particles[i]->update(deltaT);
+        //std::cout << *m_particles[i] << std::endl;
+      }
+      for (auto p: m_particles) {
+        p->update(deltaT);
+        std::cout << *p << std::endl;
       }
     }
 };

@@ -31,6 +31,7 @@ class Particle: public IParticle {
     friend std::istream& operator>>(std::istream& in, Particle& p);
 
     static int counter;
+    int m_id;
   private:
     double m_mass;
 
@@ -40,7 +41,6 @@ class Particle: public IParticle {
 
     double m_force[3];
 
-    int m_id;
 };
 
 #endif

@@ -12,8 +12,12 @@ class Octree: public IParticle {
     virtual ~Octree();
     void insert(Particle* p);
     Octree* getOctant(Particle* p);
+    Octree* getOctant(int index);
     double getMass();
     void getPos(double pos[3]);
+    bool isLeaf();
+    Particle* getParticle();
+    double getSDQuotient(Particle* p);
 
     static int counter;
 

@@ -5,7 +5,34 @@ void BarnesHutSimulation::step (double deltaT) {
 
   computeBoundingBox(min, max);
   initTree(min, max);
-  std::cout << *m_tree;
+  for (auto p: m_particles) {
+    p->setForce(0, 0, 0);
+  }
+  for (auto p: m_particles) {
+    //std::cerr << p->m_id << " ";
+    computeForce(p, m_tree);
+    //std::cerr << std::endl;
+  }
+  for (auto p: m_particles) {
+    p->update(deltaT);
+    std::cout << *p << std::endl;
+  }
+}
+
+void BarnesHutSimulation::computeForce(Particle* p, Octree* o) {
+  if (o->getParticle() == p)
+    return;
+  if (o->isLeaf() /*|| o->getSDQuotient(p) < m_thresold*/) {
+    double force[3];
+    IParticle::computeForce(p, o->getParticle(), force);
+    p->addForce(force[0], force[1], force[2]);
+    //std::cerr << o->getParticle()->m_id << ", ";
+  } else {
+    for (int i = 0; i < 8; i++) {
+      if (o->getOctant(i))
+        computeForce(p, o->getOctant(i));
+    }
+  }
 }
 
 void BarnesHutSimulation::computeBoundingBox(double min[3], double max[3]) {
