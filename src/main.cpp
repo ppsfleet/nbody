@@ -35,7 +35,6 @@ int main(int argc, char *argv[])
   }
 
   // treatment
-  cerr << "algo " << algo << " nb itération " << nbIter << " tps Interval " << intervIter << endl;
   if(algo == "barneshut"){
     BarnesHutSimulation simulation;
     simulation.run(nbIter);//, intervIter);
