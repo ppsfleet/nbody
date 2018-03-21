@@ -4,7 +4,7 @@
 
 # mesure time of execution of nbody on every file in $FILES
 # each $FILE is executed $NBTIME, then the mean of execution time is calculated and outputed in $OUTPUT
-# output format : $FILE $ALGO $NBITER $INTERV $NBTIME $SUMTIME
+# output format : $FILE $ALGO $NBITER $INTERV $NBTIME $MEANTIME
 COMMAND='bin/nbody'
 OUTPUT='result.csv'
 NBTIME=10
@@ -20,15 +20,18 @@ bench(){
 	do
 		# keep track of the process
 		echo "Running test on ${var} with ${ALGO}"
+		#reset $SUMTIME and $MEANTIME
+		SUMTIME=0
+		MEANTIME=0
 		# run the programm NBTIME times then do the mean
 		for ((i = 1; i <= NBTIME ; i++))
 		do
 			VAR=$( { ${TIME} -f "%e" ${COMMAND} -a ${ALGO} -n ${NBITER} -i ${INTERV} < ${var} > /dev/null; } 2>&1 )
 			SUMTIME=$( bc -l <<< "${SUMTIME}+${VAR}" )
 		done;
-		SUMTIME=$( bc -l <<< "scale=3; ${SUMTIME}/${NBTIME}" )
+		MEANTIME=$( bc -l <<< "scale=3; ${SUMTIME}/${NBTIME}" )
 		# store the mean in output file
-		echo $var $ALGO $NBITER $INTERV $NBTIME $SUMTIME >> ${OUTPUT}
+		echo $var $ALGO $NBITER $INTERV $NBTIME $MEANTIME >> ${OUTPUT}
 	done;
 }
 
