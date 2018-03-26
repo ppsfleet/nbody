@@ -8,9 +8,11 @@ void BarnesHutSimulation::step (double deltaT) {
   for (auto p: m_particles) {
     p->setForce(0, 0, 0);
   }
-  for (auto p: m_particles) {
+
+  #pragma omp parallel for
+  for (unsigned int i = 0; i < m_particles.size(); i++) {
     //std::cerr << p->m_id << " ";
-    computeForce(p, m_tree);
+    computeForce(m_particles[i], m_tree);
     //std::cerr << std::endl;
   }
   for (auto p: m_particles) {

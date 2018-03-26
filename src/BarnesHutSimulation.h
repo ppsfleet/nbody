@@ -14,7 +14,7 @@ class BarnesHutSimulation: public Simulation<Particle> {
     void computeForce(Particle* p, Octree* o);
   private:
     Octree* m_tree = 0;
-    double m_thresold = 0;
+    double m_thresold = 0.5;
 };
 
 #endif
