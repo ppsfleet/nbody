@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
   switch(opt)
   {
       case 'a': algo = optarg ; break;
-      case 'n': nbIter = boost::lexical_cast<int>(optarg); break;
-      case 'i': intervIter = boost::lexical_cast<float>(optarg); break;
+      case 'n': nbIter = atoi(optarg); break;
+      case 'i': intervIter = atof(optarg); break;
       case '?':
       default:
           cerr << "usuage is \n -a <value>: for determining used algorithm, [barneshut, bruteforce] default :  bruteforce" << endl

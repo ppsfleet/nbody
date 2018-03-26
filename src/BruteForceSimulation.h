@@ -31,7 +31,8 @@ class BruteForceSimulation: public Simulation<Particle> {
       }
       for (auto p: m_particles) {
         p->update(deltaT);
-        std::cout << *p << std::endl;
+        //std::cout << *p << std::endl;
+        m_socket->sendParticle(p);
       }
     }
 };

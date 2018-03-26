@@ -15,7 +15,8 @@ void BarnesHutSimulation::step (double deltaT) {
   }
   for (auto p: m_particles) {
     p->update(deltaT);
-    std::cout << *p << std::endl;
+    //std::cout << *p << std::endl;
+    m_socket->sendParticle(p);
   }
 }
 
