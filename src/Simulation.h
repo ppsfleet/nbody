@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <tuple>
 
 #include "Particle.h"
 #include "Socket.h"
@@ -23,7 +24,7 @@ template <class T>
 Simulation<T>::Simulation() {
   Particle* p;
   m_socket = new Socket("172.17.4.25" ,3001);
-
+  //m_socket = new Socket("163.172.21.76" ,8081);
   while (!std::cin.eof()) {
     p = new Particle();
     if(std::cin >> *p) {
@@ -34,8 +35,9 @@ Simulation<T>::Simulation() {
       delete p;
     }
   }
-  m_socket->sendInt(m_particles.size());
-  m_socket->sendDouble(0.01);
+  m_socket->sendInit(m_particles.size(), 0.01);
+  // m_socket->sendInt(m_particles.size());
+  //
 }
 
 template <class T>

@@ -55,6 +55,18 @@ void Socket::sendDouble(double arg){
   if (n < 0)
        error("ERROR writing to socket");
 }
+void Socket::sendInit(int nbParts, double interv){
+  int n;
+  unsigned char bytes[12];
+  int nbPartsOrdered = htonl(nbParts);
+  memcpy ( bytes, &nbPartsOrdered, 4 );
+  memcpy ( bytes+4, &interv, 8 );
+
+  n = write(sockfd,bytes,sizeof(bytes));
+  if (n < 0)
+       error("ERROR writing to socket");
+}
+
 
 double* Socket::receive(){
   int n;
