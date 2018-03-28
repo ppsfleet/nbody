@@ -12,7 +12,9 @@ FILES=(datasets/*)
 TIME=$(which time)
 ALGO="bruteforce"
 NBITER="2500"
-INTERV="1"
+INTERV="0.01"
+IP="127.0.0.1"
+PORT="3001"
 declare SUMTIME=0
 
 bench(){
@@ -28,7 +30,8 @@ bench(){
 		# run the programm NBTIME times then do the mean
 		for ((i = 1; i <= NBTIME ; i++))
 		do
-			VAR=$( { ${TIME} -f "%e %P" ${COMMAND} -a ${ALGO} -n ${NBITER} -i ${INTERV} < ${var} > /dev/null; } 2>&1 )
+			VAR=$( { ${TIME} -f "%e %P" ${COMMAND} -a ${ALGO} -n ${NBITER} -i ${INTERV} -s ${IP} -p ${PORT} < ${var} > /dev/null; } 2>&1 )
+			# echo ${VAR}
 			VAR=${VAR//%}
 			IFS=' '        # space is set as delimiter
 			read -ra ARR <<<"$VAR"
@@ -42,7 +45,7 @@ bench(){
 	done;
 }
 
-while getopts a:n:i:t:f:hr OPT
+while getopts a:n:i:t:f:s:p:hr OPT
 do
     case "$OPT" in
 				r)
@@ -70,12 +73,20 @@ do
 				f)
 						FILES=($OPTARG)
 						;;
+				s)
+						IP=($OPTARG)
+						;;
+				f)
+						PORT=($OPTARG)
+						;;
 				h)
 						echo "available parameters :"
 						echo " -r: reset output file"
 						echo " -a <bruteforce, barneshut>: algorithm, default: bruteforce"
 						echo " -n <integer>: number of iteration, default: 2500"
 						echo " -i <float>: interval between every iteration, default: 1"
+						echo " -s <value>: for setting the ip of the server, default : 127.0.0.1"
+						echo " -p <value>: for setting the port of the server, default : 3001"
 						echo " -t <integer>: number of times the algorithm is executed, to calculated benchmark's mean"
 						echo " -f <path>: path to folder containing datasets, default: datasets/*"
 						exit 1

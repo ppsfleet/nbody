@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <tuple>
+#include <string>
 
 #include "Particle.h"
 #include "Socket.h"
@@ -14,17 +14,20 @@ class Simulation {
     Simulation();
     virtual ~Simulation();
     void run(int iteration);
+    void init(char* datip, int datport, double interv);
     virtual void step(double deltaT) = 0;
+    char* ip = "127.0.0.1";
+    int port = 3001;
+    double intervIter = 0.01;
   protected:
     std::vector<T*> m_particles;
     Socket* m_socket;
 };
 
 template <class T>
-Simulation<T>::Simulation() {
+Simulation<T>::Simulation(){
   Particle* p;
-  m_socket = new Socket("172.17.4.25" ,3001);
-  //m_socket = new Socket("163.172.21.76" ,8081);
+
   while (!std::cin.eof()) {
     p = new Particle();
     if(std::cin >> *p) {
@@ -35,9 +38,16 @@ Simulation<T>::Simulation() {
       delete p;
     }
   }
-  m_socket->sendInit(m_particles.size(), 0.01);
-  // m_socket->sendInt(m_particles.size());
-  //
+
+}
+
+template <class T>
+void Simulation<T>::init(char* datip, int datport, double interv) {
+  ip = datip;
+  port = datport;
+  intervIter = interv;
+  m_socket = new Socket(ip, port);
+  m_socket->sendInit(m_particles.size(), intervIter);
 }
 
 template <class T>
@@ -51,7 +61,7 @@ Simulation<T>::~Simulation() {
 template <class T>
 void Simulation<T>::run(int iteration) {
   for (int step_i = 0; step_i < iteration; step_i++) {
-    step(0.01);
+    step(intervIter);
   }
 }
 
