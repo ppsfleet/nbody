@@ -16,15 +16,16 @@
 
 class Socket {
   public:
-    Socket (char* ip, int port);
+    Socket (char* ip, int port, bool output, int sendInterval);
     void sendParticle (Particle *p);
     void sendInt (int arg);
     void sendDouble (double arg);
     void sendInit (int nbParts, double interv);
     double* receive ();
     void close();
-  private:
-    int sockfd, portno;
+  protected:
+    int sockfd, portno, sendInter, sendInterTmp;
+    bool outputMethod;
     double buffer[3];
 };
 

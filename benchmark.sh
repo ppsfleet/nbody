@@ -15,6 +15,9 @@ NBITER="2500"
 INTERV="0.01"
 IP="127.0.0.1"
 PORT="3001"
+THRESHOLD="0.5"
+OUTPUTOPT="false"
+SEND="1"
 declare SUMTIME=0
 
 bench(){
@@ -30,7 +33,13 @@ bench(){
 		# run the programm NBTIME times then do the mean
 		for ((i = 1; i <= NBTIME ; i++))
 		do
-			VAR=$( { ${TIME} -f "%e %P" ${COMMAND} -a ${ALGO} -n ${NBITER} -i ${INTERV} -s ${IP} -p ${PORT} < ${var} > /dev/null; } 2>&1 )
+			if [ $OUTPUTOPT == "false" ]
+			then
+				VAR=$( { ${TIME} -f "%e %P" ${COMMAND} -a ${ALGO} -n ${NBITER} -i ${INTERV} -s ${IP} -p ${PORT} -u ${SEND} -t ${THRESHOLD} < ${var} > /dev/null; } 2>&1 )
+			else
+				VAR=$( { ${TIME} -f "%e %P" ${COMMAND} -a ${ALGO} -n ${NBITER} -i ${INTERV} -o -u ${SEND} -t ${THRESHOLD} < ${var} > /dev/null; } 2>&1 )
+			fi
+
 			# echo ${VAR}
 			VAR=${VAR//%}
 			IFS=' '        # space is set as delimiter
@@ -45,7 +54,7 @@ bench(){
 	done;
 }
 
-while getopts a:n:i:t:f:s:p:hr OPT
+while getopts a:n:i:t:f:s:p:u:t:ohr OPT
 do
     case "$OPT" in
 				r)
@@ -79,6 +88,15 @@ do
 				f)
 						PORT=($OPTARG)
 						;;
+				o)
+						OUTPUTOPT="true"
+						;;
+				u)
+						SEND=($OPTARG)
+						;;
+				t)
+						THRESHOLD=($OPTARG)
+						;;
 				h)
 						echo "available parameters :"
 						echo " -r: reset output file"
@@ -89,6 +107,9 @@ do
 						echo " -p <value>: for setting the port of the server, default : 3001"
 						echo " -t <integer>: number of times the algorithm is executed, to calculated benchmark's mean"
 						echo " -f <path>: path to folder containing datasets, default: datasets/*"
+						echo " -t <float>: for setting the threshold of barneshut, default : 0.5"
+	          echo " -o : for setting the output method, default : socket"
+	          echo " -u <integer>: for setting the interval between each output of particle (for exemple, 3 : for 1 particle out of 3), default : 1 (all particles outputed)"
 						exit 1
 						;;
         \?)

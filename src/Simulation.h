@@ -14,7 +14,7 @@ class Simulation {
     Simulation();
     virtual ~Simulation();
     void run(int iteration);
-    void init(char* datip, int datport, double interv);
+    void init(char* datip, int datport, double interv,  bool output, int sendInterval);
     virtual void step(double deltaT) = 0;
     char* ip = "127.0.0.1";
     int port = 3001;
@@ -42,11 +42,11 @@ Simulation<T>::Simulation(){
 }
 
 template <class T>
-void Simulation<T>::init(char* datip, int datport, double interv) {
+void Simulation<T>::init(char* datip, int datport, double interv, bool output, int sendInterval) {
   ip = datip;
   port = datport;
   intervIter = interv;
-  m_socket = new Socket(ip, port);
+  m_socket = new Socket(ip, port, output, sendInterval);
   m_socket->sendInit(m_particles.size(), intervIter);
 }
 
