@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
           << " -p <value>: for setting the port of the server, default : 3001" << endl
           << " -t <value>: for setting the threshold of barneshut, default : 0.5" << endl
           << " -o : for setting the output method, default : socket" << endl
-          << " -u <value>: for setting the interval between each output of particle (for exemple, 3 : for 1 particle out of 3), default : 1 (all particles outputed)" << endl;
+          << " -u <value>: for setting the interval between each output of particle (for exemple, 3 : for 1 particle out of 3), default : 1 (all particles outputed). A value of 0 disable the output of the result, useful for benchark." << endl;
           exit(0);
 
   }

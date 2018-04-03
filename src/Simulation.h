@@ -32,7 +32,7 @@ Simulation<T>::Simulation(){
     p = new Particle();
     if(std::cin >> *p) {
       this->m_particles.push_back(p);
-      std::cout << *p << std::endl;
+      //std::cout << *p << std::endl;
 
     } else {
       delete p;

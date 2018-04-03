@@ -38,6 +38,9 @@ Socket::Socket(char* ip, int port, bool output, int sendInterval)
 }
 
 void Socket::sendParticle(Particle *p){
+  // Disable output for sendInterval == 0
+  if (sendInterTmp == 0)
+    return;
   if (sendInterTmp > 1){
     sendInterTmp--;
   }else{
