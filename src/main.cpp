@@ -2,7 +2,6 @@
 #include "BarnesHutSimulation.h"
 #include "Octree.h"
 #include <string>
-#include <boost/lexical_cast.hpp>
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -50,7 +49,7 @@ int main(int argc, char *argv[])
   }
   // treatment
   if(algo == "barneshut"){
-    BarnesHutSimulation simulation;
+    BarnesHutSimulation simulation(threshold);
     simulation.init(ip, port, intervIter, output, send);
     simulation.run(nbIter);
   }

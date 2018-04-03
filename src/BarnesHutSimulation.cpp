@@ -1,5 +1,9 @@
 #include "BarnesHutSimulation.h"
 
+BarnesHutSimulation::BarnesHutSimulation (double threshold): Simulation() {
+  m_thresold = threshold;
+}
+
 void BarnesHutSimulation::step (double deltaT) {
   double min[3], max[3];
 
