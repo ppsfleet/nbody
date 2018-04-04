@@ -6,6 +6,10 @@
 #include <algorithm>
 #include <omp.h>
 
+/**************
+ WIP for better reduction
+ **************/
+
 /*
  * Brute force simulation.
  * Complexity = n(n+1)/2 + n = O(n^2)
