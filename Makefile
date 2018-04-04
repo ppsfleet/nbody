@@ -1,6 +1,6 @@
 #Compilier options
 CC=g++
-CFLAGS=-Wall -lm
+CFLAGS=-Wall -lm -fopenmp
 #Executable name (change it!)
 PROG=nbody
 #Directories configuration

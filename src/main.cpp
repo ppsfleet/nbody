@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
   }
 
   // treatment
+  cout << "2 0.01" << endl;
   if(algo == "barneshut"){
     BarnesHutSimulation simulation;
     simulation.run(nbIter);//, intervIter);

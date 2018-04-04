@@ -5,6 +5,8 @@
 
 #include <iostream>
 #include <cmath>
+//#include <array>
+//#include <vector>
 
 class Particle: public IParticle {
   public:
@@ -21,12 +23,17 @@ class Particle: public IParticle {
 
     double getMass();
 
+    //void resetForce();
     void setForce(double fx, double fy, double fz);
     void addForce(double fx, double fy, double fz);
+    //double* getForce();
     void update(double deltaT);
 
     static void computeForce(Particle* p1, Particle* p2);
+    //void reduceForces();
 
+    //static Particle* plus(Particle * first, Particle * second);
+    //Particle& operator+=(Particle & other);
     friend std::ostream& operator<<(std::ostream& out, const Particle& p);
     friend std::istream& operator>>(std::istream& in, Particle& p);
 
@@ -40,6 +47,7 @@ class Particle: public IParticle {
     double m_position[3];
 
     double m_force[3];
+    //std::vector<std::array<double, 3> > m_vforces;
 
 };
 
