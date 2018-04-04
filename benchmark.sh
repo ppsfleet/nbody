@@ -54,7 +54,7 @@ bench(){
 	done;
 }
 
-while getopts a:n:i:t:f:s:p:u:t:ohr OPT
+while getopts a:n:i:T:f:s:p:u:t:ohr OPT
 do
     case "$OPT" in
 				r)
@@ -76,7 +76,7 @@ do
         i)
             INTERV=$OPTARG
             ;;
-				t)
+				T)
 						NBTIME=$OPTARG
 						;;
 				f)
@@ -105,7 +105,7 @@ do
 						echo " -i <float>: interval between every iteration, default: 1"
 						echo " -s <value>: for setting the ip of the server, default : 127.0.0.1"
 						echo " -p <value>: for setting the port of the server, default : 3001"
-						echo " -t <integer>: number of times the algorithm is executed, to calculated benchmark's mean"
+						echo " -T <integer>: number of times the algorithm is executed, to calculated benchmark's mean"
 						echo " -f <path>: path to folder containing datasets, default: datasets/*"
 						echo " -t <float>: for setting the threshold of barneshut, default : 0.5"
 	          echo " -o : for setting the output method, default : socket"
