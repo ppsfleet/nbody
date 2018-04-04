@@ -18,7 +18,6 @@ class Octree: public IParticle {
     bool isLeaf();
     Particle* getParticle();
     double getSDQuotient(Particle* p);
-    int m_id;
 
     static int counter;
 
@@ -54,6 +53,7 @@ class Octree: public IParticle {
 
     Particle* m_particle;
     bool m_isLeaf;
+    int m_id;
 
     std::ostream& print(std::ostream& out, int level);
     void updateCenterOfMass();

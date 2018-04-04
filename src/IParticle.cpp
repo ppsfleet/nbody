@@ -6,7 +6,7 @@ void IParticle::computeForce(IParticle* p1, IParticle* p2, double force[3]) {
 
   p1->getPos(posP1);
   p2->getPos(posP2);
-  /*for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) {
     deltaPos[i] = posP2[i] - posP1[i];
     r2 += deltaPos[i] * deltaPos[i];
   }
@@ -16,5 +16,5 @@ void IParticle::computeForce(IParticle* p1, IParticle* p2, double force[3]) {
 
   for (int i = 0; i < 3; i++) {
     force[i] = valForce * deltaPos[i] / r;
-  }*/
+  }
 }
