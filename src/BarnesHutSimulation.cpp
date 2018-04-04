@@ -31,7 +31,8 @@ void BarnesHutSimulation::computeForce(Particle* p, Octree* o) {
     return;
   if (o->isLeaf() || o->getSDQuotient(p) < m_thresold) {
     double force[3];
-    IParticle::computeForce(p, o->getParticle(), force);
+    //std::cout << *p << " " << o->m_id << "plop" << std::endl;
+    IParticle::computeForce(p, o, force);
     p->addForce(force[0], force[1], force[2]);
     //std::cerr << o->getParticle()->m_id << ", ";
   } else {
