@@ -75,10 +75,10 @@ void Particle::computeForce(Particle* p1, Particle* p2) {
 }
 
 std::ostream& operator<<(std::ostream& out, const Particle& p) {
-  return out << p.m_id << " " <<
-    p.m_position[0] << " " << p.m_position[1] << " " << p.m_position[2] << " " <<
-    p.m_force[0] << " " << p.m_force[1] << " " << p.m_force[2] << " " <<
-    p.m_velocity[0] << " " << p.m_velocity[1] << " " << p.m_velocity[2];
+  std::cout.precision(17);
+  return out <<
+    //p.m_force[0] << " " << p.m_force[1] << " " << p.m_force[2] << " " <<
+    std::fixed << p.m_position[0] << " " << std::fixed << p.m_position[1] << " " << std::fixed << p.m_position[2];
 }
 
 std::istream& operator>>(std::istream& in, Particle& p) {
