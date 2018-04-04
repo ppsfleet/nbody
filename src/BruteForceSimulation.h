@@ -11,12 +11,17 @@
  class BruteForceSimulation: public Simulation<Particle> {
    public:
      void step (double deltaT) {
+       int para = 0;
+       if (m_particles.size() > 127) {
+         para = 1;
+       }
        for (auto p: m_particles) {
          p->setForce(0, 0, 0);
        }
        for (unsigned int i = 0; i < m_particles.size(); i++) {
          //std::cerr << m_particles[i]->m_id << " ";
-         #pragma omp parallel for
+
+         #pragma omp parallel for if(para)
          for (unsigned int j = 0; j < m_particles.size(); j++) {
            if (i != j) {
              //std::cerr << m_particles[j]->m_id << ", ";
@@ -36,6 +41,7 @@
          m_socket->sendParticle(p);
        }
      }
+
  };
 
 #endif
