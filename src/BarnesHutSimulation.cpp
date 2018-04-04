@@ -29,7 +29,7 @@ void BarnesHutSimulation::step (double deltaT) {
 void BarnesHutSimulation::computeForce(Particle* p, Octree* o) {
   if (o->getParticle() == p)
     return;
-  if (o->isLeaf() /*|| o->getSDQuotient(p) < m_thresold*/) {
+  if (o->isLeaf() || o->getSDQuotient(p) < m_thresold) {
     double force[3];
     IParticle::computeForce(p, o->getParticle(), force);
     p->addForce(force[0], force[1], force[2]);
